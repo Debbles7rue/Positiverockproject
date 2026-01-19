@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Dad Jokes</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@400;600&display=swap');
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
+  }
+  
+  /* Animated background particles */
+  body::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background-image: 
+      radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px),
+      radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 50px 50px, 80px 80px;
+    background-position: 0 0, 40px 40px;
+    animation: float 20s linear infinite;
+    pointer-events: none;
+  }
+  
+  @keyframes float {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(-50px, -50px); }
+  }
+  
+  .container {
+    max-width: 600px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 30px;
+    padding: 50px 40px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    position: relative;
+    animation: slideIn 0.6s ease-out;
+  }
+  
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 10px;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    animation: fadeIn 0.8s ease-out;
+  }
+  
+  .rock-emoji {
+    font-size: 4rem;
+    text-align: center;
+    margin-bottom: 20px;
+    animation: bounce 2s ease-in-out infinite;
+  }
+  
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  .moment {
+    font-size: 1.4rem;
+    line-height: 1.8;
+    color: #2d3748;
+    text-align: center;
+    margin-bottom: 40px;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 1s ease-out 0.3s both;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  .permanent {
+    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+    color: white;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 1.1rem;
+    line-height: 2;
+    margin-top: 30px;
+    box-shadow: 0 10px 30px rgba(246, 211, 101, 0.3);
+    animation: fadeIn 1s ease-out 0.6s both;
+  }
+  
+  .permanent strong {
+    background: rgba(255,255,255,0.2);
+    padding: 2px 8px;
+    border-radius: 5px;
+  }
+  
+  .hint {
+    margin-top: 25px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    font-style: italic;
+  }
+  
+  .reactions {
+    margin-top: 40px;
+    padding: 30px;
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    border-radius: 20px;
+    text-align: center;
+    animation: fadeIn 1s ease-out 0.75s both;
+  }
+  
+  .reactions h3 {
+    margin-bottom: 20px;
+    color: #2d3748;
+    font-size: 1.2rem;
+  }
+  
+  .reaction-btn {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 15px 20px;
+    background: white;
+    color: #2d3748;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    text-align: left;
+  }
+  
+  .reaction-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  }
+  
+  .reaction-btn:active {
+    transform: scale(0.98);
+  }
+  
+  .reaction-btn.clicked {
+    background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+    color: white;
+  }
+  
+  .count {
+    float: right;
+    background: rgba(102, 126, 234, 0.2);
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  
+  .reaction-btn.clicked .count {
+    background: rgba(255,255,255,0.3);
+  }
+  
+  .donation {
+    margin-top: 30px;
+    text-align: center;
+    color: #4a5568;
+    font-size: 0.95rem;
+    animation: fadeIn 1s ease-out 0.9s both;
+  }
+  
+  .button {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 14px 32px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  }
+  
+  .button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+  }
+  
+  .button:active {
+    transform: translateY(0);
+  }
+  
+  /* Responsive */
+  @media (max-width: 600px) {
+    .container {
+      padding: 40px 25px;
+      border-radius: 20px;
+    }
+    
+    .moment {
+      font-size: 1.2rem;
+    }
+    
+    .rock-emoji {
+      font-size: 3rem;
+    }
+    
+    .permanent {
+      font-size: 1rem;
+      padding: 25px 20px;
+    }
+    
+    .page-title {
+      font-size: 2rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1 class="page-title">Dad Jokes</h1>
+  <div class="rock-emoji">😄</div>
+  
+  <div id="moment" class="moment"></div>
+
+  <div class="permanent">
+    You matter.<br>
+    You're enough.<br>
+    Nothing lasts forever.<br>
+    So keep holding on for brighter days.<br><br>
+    Check back <strong>tomorrow</strong> for another joke, but please leave the rock for others to find.
+    
+    <div class="hint">
+      Psst... there might be other rocks out there with different QR codes. Each one leads to something new. Keep exploring. 🪨
+    </div>
+  </div>
+
+  <div class="reactions">
+    <h3>How did this make you feel?</h3>
+    <button class="reaction-btn" data-reaction="smile">
+      😊 That made me smile <span class="count" id="count-smile">0</span>
+    </button>
+    <button class="reaction-btn" data-reaction="groan">
+      🤦 I groaned... but I smiled <span class="count" id="count-groan">0</span>
+    </button>
+    <button class="reaction-btn" data-reaction="laugh">
+      😂 I actually laughed <span class="count" id="count-laugh">0</span>
+    </button>
+  </div>
+
+  <div class="donation">
+    Love what you found? Supporting this little project helps spread more smiles. Thank you.
+    <br>
+    <a href="https://buy.stripe.com/8x214m7aFgYI0ukans6wE07" class="button">Support the project</a>
+  </div>
+</div>
+
+<script>
+  const jokes = [
+    { setup: "Why don't scientists trust atoms?", punchline: "Because they make up everything." },
+    { setup: "I used to hate facial hair...", punchline: "But then it grew on me." },
+    { setup: "What do you call a bear with no teeth?", punchline: "A gummy bear." },
+    { setup: "I'm reading a book about anti-gravity.", punchline: "It's impossible to put down." },
+    { setup: "Why did the scarecrow win an award?", punchline: "He was outstanding in his field." },
+    { setup: "I only know 25 letters of the alphabet.", punchline: "I don't know y." },
+    { setup: "What's the best thing about Switzerland?", punchline: "I don't know, but the flag is a big plus." },
+    { setup: "I told my wife she was drawing her eyebrows too high.", punchline: "She looked surprised." },
+    { setup: "Why don't eggs tell jokes?", punchline: "They'd crack each other up." },
+    { setup: "What do you call a fake noodle?", punchline: "An impasta." },
+    { setup: "I'm terrified of elevators.", punchline: "I'm taking steps to avoid them." },
+    { setup: "Why did the math book look so sad?", punchline: "Because it had too many problems." },
+    { setup: "I would avoid the sushi if I were you.", punchline: "It's a little fishy." },
+    { setup: "Want to hear a joke about construction?", punchline: "I'm still working on it." },
+    { setup: "What did the ocean say to the beach?", punchline: "Nothing, it just waved." },
+    { setup: "Why do bees have sticky hair?", punchline: "Because they use a honeycomb." },
+    { setup: "What's orange and sounds like a parrot?", punchline: "A carrot." },
+    { setup: "Why can't your nose be 12 inches long?", punchline: "Because then it would be a foot." },
+    { setup: "I used to play piano by ear.", punchline: "Now I use my hands." },
+    { setup: "What do you call a pile of cats?", punchline: "A meowtain." },
+    { setup: "Why did the coffee file a police report?", punchline: "It got mugged." },
+    { setup: "I'm afraid for the calendar.", punchline: "Its days are numbered." },
+    { setup: "What did one wall say to the other?", punchline: "I'll meet you at the corner." },
+    { setup: "Why don't skeletons fight each other?", punchline: "They don't have the guts." },
+    { setup: "What do you call a dinosaur that crashes his car?", punchline: "Tyrannosaurus Wrecks." },
+    { setup: "I couldn't figure out why the baseball kept getting bigger.", punchline: "Then it hit me." },
+    { setup: "How do you organize a space party?", punchline: "You planet." },
+    { setup: "Why did the bicycle fall over?", punchline: "Because it was two tired." },
+    { setup: "What's brown and sticky?", punchline: "A stick." },
+    { setup: "I stayed up all night wondering where the sun went.", punchline: "Then it dawned on me." }
+  ];
+
+  const startDate = new Date("2026-01-18");
+  startDate.setHours(0, 0, 0, 0);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const dayIndex = (Math.floor((today - startDate) / (1000*60*60*24))) % jokes.length;
+  
+  const todayJoke = jokes[dayIndex];
+  document.getElementById("moment").innerHTML = todayJoke.setup;
+  
+  // Show punchline after 3 seconds
+  setTimeout(() => {
+    document.getElementById("moment").innerHTML = todayJoke.setup + "<br><br>" + todayJoke.punchline;
+  }, 3000);
+
+  // Reaction system with persistent storage
+  const reactions = ['smile', 'groan', 'laugh'];
+  
+  // Load counts from storage
+  async function loadCounts() {
+    for (const reaction of reactions) {
+      try {
+        const result = await window.storage.get(`jokes-reaction-${reaction}`, true);
+        const count = result ? parseInt(result.value) : 0;
+        document.getElementById(`count-${reaction}`).textContent = count;
+      } catch (error) {
+        document.getElementById(`count-${reaction}`).textContent = 0;
+      }
+    }
+  }
+
+  // Check if user already clicked today
+  function checkUserClicked() {
+    const clicked = localStorage.getItem('jokes-reaction-clicked-today');
+    const today = new Date().toDateString();
+    
+    if (clicked === today) {
+      const userReaction = localStorage.getItem('jokes-user-reaction');
+      if (userReaction) {
+        const btn = document.querySelector(`[data-reaction="${userReaction}"]`);
+        if (btn) btn.classList.add('clicked');
+      }
+      // Disable all buttons
+      document.querySelectorAll('.reaction-btn').forEach(btn => {
+        btn.disabled = true;
+        btn.style.cursor = 'not-allowed';
+        btn.style.opacity = '0.7';
+      });
+    }
+  }
+
+  // Handle reaction clicks
+  document.querySelectorAll('.reaction-btn').forEach(btn => {
+    btn.addEventListener('click', async function() {
+      const reaction = this.getAttribute('data-reaction');
+      
+      // Check if already clicked today
+      const clicked = localStorage.getItem('jokes-reaction-clicked-today');
+      const today = new Date().toDateString();
+      if (clicked === today) return;
+      
+      // Mark as clicked
+      this.classList.add('clicked');
+      localStorage.setItem('jokes-reaction-clicked-today', today);
+      localStorage.setItem('jokes-user-reaction', reaction);
+      
+      // Disable all buttons
+      document.querySelectorAll('.reaction-btn').forEach(b => {
+        b.disabled = true;
+        b.style.cursor = 'not-allowed';
+        b.style.opacity = '0.7';
+      });
+      
+      // Increment count in storage
+      try {
+        const result = await window.storage.get(`jokes-reaction-${reaction}`, true);
+        const currentCount = result ? parseInt(result.value) : 0;
+        const newCount = currentCount + 1;
+        await window.storage.set(`jokes-reaction-${reaction}`, newCount.toString(), true);
+        document.getElementById(`count-${reaction}`).textContent = newCount;
+      } catch (error) {
+        console.error('Error updating count:', error);
+      }
+    });
+  });
+
+  // Initialize
+  loadCounts();
+  checkUserClicked();
+</script>
+
+</body>
+</html>
