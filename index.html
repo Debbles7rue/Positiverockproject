@@ -311,7 +311,7 @@
   <div class="donation">
     Love what you found? Supporting this little project helps spread more smiles. Thank you.
     <br>
-    <a href="#" id="stripeButton" class="button">Support the project</a>
+    <a href="https://buy.stripe.com/8x214m7aFgYI0ukans6wE07" class="button">Support the project</a>
   </div>
 </div>
 
@@ -350,7 +350,9 @@
   ];
 
   const startDate = new Date("2026-01-18");
+  startDate.setHours(0, 0, 0, 0); // Reset to midnight
   const today = new Date();
+  today.setHours(0, 0, 0, 0); // Reset to midnight
   const dayIndex = (Math.floor((today - startDate) / (1000*60*60*24))) % moments.length;
   document.getElementById("moment").innerHTML = moments[dayIndex];
 
@@ -358,7 +360,7 @@
   if(dayIndex === 1) {
     setTimeout(() => {
       const momentDiv = document.getElementById("moment");
-      momentDiv.innerHTML = "✨ Good vibes sent! ✨";
+      momentDiv.innerHTML = "Calibrating good vibes…<br>Please wait...<br><br>✨ Good vibes sent! ✨";
     }, 3000);
   }
 
