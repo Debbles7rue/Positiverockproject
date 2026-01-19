@@ -282,6 +282,14 @@
   const dayIndex = (Math.floor((today - startDate) / (1000*60*60*24))) % moments.length;
   document.getElementById("moment").innerHTML = moments[dayIndex];
 
+  // Day 2: Good vibes calibration message
+  if(dayIndex === 1) {
+    setTimeout(() => {
+      const momentDiv = document.getElementById("moment");
+      momentDiv.innerHTML = "✨ Good vibes sent! ✨";
+    }, 3000);
+  }
+
   // Day 10: Do nothing button
   const btn = document.getElementById("doNothingBtn");
   if (btn) {
@@ -293,7 +301,7 @@
   }
 
   // Stripe button - REPLACE WITH YOUR STRIPE LINK
-   document.getElementById("stripeButton").href = "https://buy.stripe.com/8x214m7aFgYI0ukans6wE07";
+  document.getElementById("stripeButton").href = "#";
 
   // Rick roll for day 29
   if(dayIndex === 28){
