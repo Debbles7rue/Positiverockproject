@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Rock Moment</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@400;600&display=swap');
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
+  }
+  
+  /* Animated background particles */
+  body::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background-image: 
+      radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px),
+      radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 50px 50px, 80px 80px;
+    background-position: 0 0, 40px 40px;
+    animation: float 20s linear infinite;
+    pointer-events: none;
+  }
+  
+  @keyframes float {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(-50px, -50px); }
+  }
+  
+  .container {
+    max-width: 600px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 30px;
+    padding: 50px 40px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    position: relative;
+    animation: slideIn 0.6s ease-out;
+  }
+  
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .rock-emoji {
+    font-size: 4rem;
+    text-align: center;
+    margin-bottom: 20px;
+    animation: bounce 2s ease-in-out infinite;
+  }
+  
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  .moment {
+    font-size: 1.4rem;
+    line-height: 1.8;
+    color: #2d3748;
+    text-align: center;
+    margin-bottom: 40px;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 1s ease-out 0.3s both;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  .permanent {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 1.1rem;
+    line-height: 2;
+    margin-top: 30px;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    animation: fadeIn 1s ease-out 0.6s both;
+  }
+  
+  .permanent strong {
+    background: rgba(255,255,255,0.2);
+    padding: 2px 8px;
+    border-radius: 5px;
+  }
+  
+  .donation {
+    margin-top: 30px;
+    text-align: center;
+    color: #4a5568;
+    font-size: 0.95rem;
+    animation: fadeIn 1s ease-out 0.9s both;
+  }
+  
+  .button {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 14px 32px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+  }
+  
+  .button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(245, 87, 108, 0.6);
+  }
+  
+  .button:active {
+    transform: translateY(0);
+  }
+  
+  #doNothingBtn {
+    background: linear-gradient(135deg, #ffa751 0%, #ffe259 100%);
+    box-shadow: 0 4px 15px rgba(255, 167, 81, 0.4);
+    margin-top: 15px;
+  }
+  
+  #btnMsg {
+    margin-top: 15px;
+    font-style: italic;
+    color: #667eea;
+    animation: fadeIn 0.5s ease-out;
+  }
+  
+  iframe {
+    width: 100%;
+    height: 315px;
+    margin-top: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  }
+  
+  .playBtn {
+    margin-top: 20px;
+    display: inline-block;
+    padding: 14px 32px;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+    color: white;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+    transition: all 0.3s ease;
+  }
+  
+  .playBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+  }
+  
+  #rickRollContainer {
+    margin-top: 10px;
+  }
+  
+  /* Responsive */
+  @media (max-width: 600px) {
+    .container {
+      padding: 40px 25px;
+      border-radius: 20px;
+    }
+    
+    .moment {
+      font-size: 1.2rem;
+    }
+    
+    .rock-emoji {
+      font-size: 3rem;
+    }
+    
+    .permanent {
+      font-size: 1rem;
+      padding: 25px 20px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="rock-emoji">🪨</div>
+  
+  <div id="moment" class="moment"></div>
+
+  <div class="permanent">
+    You matter.<br>
+    You're enough.<br>
+    Nothing lasts forever.<br>
+    So keep holding on for brighter days.<br><br>
+    Scan <strong>tomorrow</strong> for another message, but please leave the rock for others to find.
+  </div>
+
+  <div class="donation">
+    Love what you found? Supporting this little project helps spread more smiles. Thank you.
+    <br>
+    <a href="#" id="stripeButton" class="button">Support the project</a>
+  </div>
+</div>
+
+<script>
+  const moments = [
+    "This rock has been waiting for you.<br>And now here you are. Bold choice.",
+    "Calibrating good vibes…<br>Please wait.",
+    "This was not the rock you were looking for.<br>But it is the one you found.",
+    "No ads.<br>No agenda.<br>Just… hi.",
+    "You unlocked absolutely nothing.<br>And that's okay.",
+    "Please pause for one breath.<br>That's it. You can go now.",
+    "Some people find money on the ground.<br>You found this.",
+    "This message traveled through stone to reach you.<br>Feels dramatic, but it's actually anti-climatic.",
+    "If today feels weird…<br>This rock makes it even weirder 😊",
+    "Do not press this button.<br><button id='doNothingBtn' class='button'>Do not press</button><div id='btnMsg'></div>",
+    "Please take a moment to wiggle your shoulders.<br>Even the rock thinks you need it.",
+    "This page intentionally left meaningful.",
+    "You were curious enough to scan this.<br>That counts for something.",
+    "404: Motivation not found.<br>Still showing up anyway.",
+    "Nothing is required of you in this moment.",
+    "Someone somewhere is overthinking everything.<br>(It might be you. It's okay.)",
+    "This is your reminder to drink some water.<br>Yes, really.",
+    "You didn't find this by accident.<br>Or maybe you did. Either way, here it is.",
+    "Imagine if rocks could talk.<br>This one would just say 'hey.'",
+    "Please wait while we overthink everything…<br>Okay, done.",
+    "This page has no instructions.<br>You're doing fine.",
+    "Some things don't need explanation.<br>This might be one of them.",
+    "You're allowed to go at your own pace.<br>The rock agrees.",
+    "Nothing magical is happening here.<br>And yet… something kind is.",
+    "This moment asked nothing of you.<br>That's intentional.",
+    "Tiny moments add up.<br>You just had one.",
+    "This message waited patiently for you.",
+    "Not everything meaningful announces itself.",
+    "You clicked a rock. Bold move.<br><div id='rickRollContainer'>Loading...</div>",
+    "Thanks for stopping for a moment.<br>Really."
+  ];
+
+  const startDate = new Date("2026-01-18");
+  const today = new Date();
+  const dayIndex = (Math.floor((today - startDate) / (1000*60*60*24))) % moments.length;
+  document.getElementById("moment").innerHTML = moments[dayIndex];
+
+  // Day 10: Do nothing button
+  const btn = document.getElementById("doNothingBtn");
+  if (btn) {
+    btn.addEventListener("click", () => {
+      setTimeout(() => {
+        document.getElementById("btnMsg").innerText = "I knew you would press it. It does nothing though.";
+      }, 5000);
+    });
+  }
+
+  // Stripe button - REPLACE WITH YOUR STRIPE LINK
+  document.getElementById("stripeButton").href = "#";
+
+  // Rick roll for day 29
+  if(dayIndex === 28){
+    const container = document.getElementById('rickRollContainer');
+    container.innerHTML = '<iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+  }
+</script>
+
+</body>
+</html>
